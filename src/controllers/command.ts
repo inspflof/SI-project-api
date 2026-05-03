@@ -1,0 +1,21 @@
+import { Request, Response } from "express"
+import commandQueries from "../services/db/queries/command.js"
+
+
+const command = {
+    async create(req: Request, res: Response) {
+        const { type, vehicleId } = req.body
+
+        try {
+            const command = await commandQueries.create(type, vehicleId)
+            res.status(200).json(command)
+        } catch (err) {
+            if(err instanceof Error) {
+                return res.status(500).json({ message: err.message })
+            }
+            return res.status(500).json({ message: "Unknown error" })
+        }
+    }
+}
+
+export default command
