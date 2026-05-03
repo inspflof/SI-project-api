@@ -32,12 +32,16 @@ model Command {
   id    Int     @id @default(autoincrement())
   type  CommandType
   status  CommandStatus
+  vehicle_id String
+  vehicle Vehicle @relation(fields: [vehicle_id], references: [id])
   created_at  DateTime @default(now())
 }
 
 model Vehicle {
   id  String @id @default(uuid())
-  Slot Slot[]
+  immatriculation String
+  slot Slot[]
+  command Command[]
 }
 
 enum CommandStatus {
