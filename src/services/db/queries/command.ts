@@ -14,6 +14,12 @@ const command = {
 
     async getAll() {
         return await prisma.command.findMany()
+    },
+
+    async getById(id: number) {
+        return await prisma.command.findUnique({
+            where: { id }
+        })
     }
 }
 
