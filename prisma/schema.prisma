@@ -23,8 +23,8 @@ model Slot {
   x     Int
   y     Int
   is_occupied Boolean
-  vehicle_id String
-  vehicle Vehicle @relation(fields: [vehicle_id], references: [id]) 
+  vehicle_id String?
+  vehicle Vehicle? @relation(fields: [vehicle_id], references: [id]) 
   last_update DateTime @updatedAt
 }
 
