@@ -6,10 +6,24 @@ const slot = {
             where: {
                 is_occupied: false
             },
-            orderBy: {
-                x: "asc"
-            }
+            orderBy: [
+                { x: "asc" },
+                { y: "asc" }
+
+            ]
         }) 
+    },
+
+    async editPost(postId: number, vehicleId?: string) {
+        return await prisma.slot.update({
+            where : {
+                id: postId
+            },
+            data: {
+                is_occupied: !!vehicleId,
+                vehicle_id: vehicleId
+            }
+        })
     }
 }
 
