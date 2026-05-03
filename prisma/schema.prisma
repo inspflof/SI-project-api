@@ -17,3 +17,37 @@ model User {
   email String  @unique
   name  String?
 } 
+
+model Slot {
+  id    Int     @id @default(autoincrement())
+  x     Int
+  y     Int
+  is_occupied Boolean
+  vehicle_id String
+  vehicle Vehicle @relation(fields: [vehicle_id], references: [id]) 
+  last_update DateTime @updatedAt
+}
+
+model Command {
+  id    Int     @id @default(autoincrement())
+  type  CommandType
+  status  CommandStatus
+  created_at  DateTime @default(now())
+}
+
+model Vehicle {
+  id  String @id @default(uuid())
+  Slot Slot[]
+}
+
+enum CommandStatus {
+  PENDING
+  PROCESSING
+  DONE
+  ERROR
+}
+
+enum CommandType {
+  PARK
+  RETRIEVE
+}
