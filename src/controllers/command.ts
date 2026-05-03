@@ -15,6 +15,18 @@ const command = {
             }
             return res.status(500).json({ message: "Unknown error" })
         }
+    },
+
+    async getAll(req: Request, res: Response) {
+        try {
+            const commands = await commandQueries.getAll()
+            res.status(200).json(commands)
+        } catch (err) {
+            if(err instanceof Error) {
+                return res.status(500).json({ message: err.message })
+            }
+            return res.status(500).json({ message: "Unknown error" })
+        }
     }
 }
 
