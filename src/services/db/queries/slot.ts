@@ -14,15 +14,24 @@ const slot = {
         }) 
     },
 
-    async editPost(postId: number, vehicleId?: string) {
+    async edit(slotId: number, vehicleId?: string) {
         return await prisma.slot.update({
             where : {
-                id: postId
+                id: slotId
             },
             data: {
                 is_occupied: !!vehicleId,
                 vehicle_id: vehicleId
             }
+        })
+    },
+
+    async getAll() {
+        return await prisma.slot.findMany({
+            orderBy: [
+                { x: "asc"},
+                { y: "asc"}
+            ]
         })
     }
 }
