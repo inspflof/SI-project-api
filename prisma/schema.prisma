@@ -26,6 +26,7 @@ model Slot {
   vehicle_id String?
   vehicle Vehicle? @relation(fields: [vehicle_id], references: [id]) 
   last_update DateTime @updatedAt
+  command Command[]
 }
 
 model Command {
@@ -35,6 +36,8 @@ model Command {
   vehicle_id String
   vehicle Vehicle @relation(fields: [vehicle_id], references: [id])
   created_at  DateTime @default(now())
+  slot_id Int
+  slot Slot @relation(fields: [slot_id], references: [id])
 }
 
 model Vehicle {

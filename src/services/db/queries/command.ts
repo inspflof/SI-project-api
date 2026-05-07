@@ -2,13 +2,32 @@ import { prisma } from "../../../config/prisma.js"
 import { CommandStatus, CommandType } from "../../../generated/prisma/enums.js"
 
 const command = {
-    async create(type: CommandType, vehicleId: string) {
-        return await prisma.command.create({
-            data: {
-                status: "PENDING",
-                type,
-                vehicle_id: vehicleId
-            }
+    async create(type: CommandType, vehicleId: string, slotId: number) {
+        return await prisma.$transaction(async (tx) => {
+
+            await tx.slot.update({
+                where: {
+                    id: slotId
+                },
+                data: {
+                    is_occupied: true,
+                    vehicle_id: vehicleId
+                }
+            })
+
+            return await tx.command.create({
+                data: {
+                    status: "PENDING",
+                    type,
+                    vehicle_id: vehicleId,
+                    slot_id: slotId
+                },
+
+                include: {
+                    slot: true,
+                    vehicle: true
+                }
+            })
         })
     },
 

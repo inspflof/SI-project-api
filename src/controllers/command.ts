@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import commandQueries from "../services/db/queries/command.js"
+import slotQueries from "../services/db/queries/slot.js"
 
 
 const command = {
@@ -7,7 +8,11 @@ const command = {
         const { type, vehicleId } = req.body
 
         try {
-            const command = await commandQueries.create(type, vehicleId)
+            const slot = await slotQueries.getEmpty()
+            if(!slot) {
+                throw new Error("Il n'y a plus de place disponible")
+            }
+            const command = await commandQueries.create(type, vehicleId, slot?.id)
             res.status(200).json(command)
         } catch (err) {
             if(err instanceof Error) {
