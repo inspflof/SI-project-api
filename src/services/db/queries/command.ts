@@ -48,6 +48,9 @@ const command = {
             },
             orderBy: {
                 created_at: "asc"
+            },
+            include: {
+                slot: true
             }
         })
     },
