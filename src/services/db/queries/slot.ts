@@ -6,9 +6,12 @@ const slot = {
             where: {
                 is_occupied: false
             },
+            include: {
+                vehicle: true
+            },
             orderBy: [
                 { x: "asc" },
-                { y: "asc" }
+                { y: "asc" },
 
             ]
         }) 
@@ -29,9 +32,12 @@ const slot = {
     async getAll() {
         return await prisma.slot.findMany({
             orderBy: [
+                { y: "desc"},
                 { x: "asc"},
-                { y: "asc"}
-            ]
+            ],
+            include: {
+                vehicle: true
+            },
         })
     }
 }

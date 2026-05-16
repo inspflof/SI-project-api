@@ -23,7 +23,7 @@ model Slot {
   x     Int
   y     Int
   is_occupied Boolean
-  vehicle_id String?
+  vehicle_id String? @unique
   vehicle Vehicle? @relation(fields: [vehicle_id], references: [id]) 
   last_update DateTime @updatedAt
   command Command[]
@@ -41,9 +41,10 @@ model Command {
 }
 
 model Vehicle {
-  id  String @id @default(uuid())
+  id  String @id @default(uuid(7))
   immatriculation String
-  slot Slot[]
+
+  slot Slot?
   command Command[]
 }
 
