@@ -82,7 +82,7 @@ const command = {
         try {
             const command = await commandQueries.getById(Number(commandId))
 
-            if(command?.type === "RETRIEVE" && command.status === "DONE") {
+            if(command?.type === "RETRIEVE" && status === "DONE") {
                 const slot = await slotQueries.edit(command.slot_id)
             }
 
