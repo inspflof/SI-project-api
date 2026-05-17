@@ -10,8 +10,8 @@ const slot = {
                 vehicle: true
             },
             orderBy: [
-                { x: "asc" },
                 { y: "asc" },
+                { x: "asc" },
 
             ]
         }) 
@@ -21,6 +21,9 @@ const slot = {
         return await prisma.slot.update({
             where : {
                 id: slotId
+            },
+            include: {
+                vehicle: true
             },
             data: {
                 is_occupied: !!vehicleId,

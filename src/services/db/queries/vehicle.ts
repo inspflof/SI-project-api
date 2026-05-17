@@ -10,12 +10,26 @@ const vehicle =  {
     },
 
     async getAll() {
-        return await prisma.vehicle.findMany()
+        return await prisma.vehicle.findMany({
+            include: {
+                command: {
+                    orderBy: {
+                        created_at: "desc"
+                    },
+                    take: 1
+                },
+                slot: true
+            }
+        })
     },
 
     async getById(id: string) {
         return await prisma.vehicle.findUnique({
-            where: { id }
+            where: { id },
+            include: {
+                command: true,
+                slot: true
+            }
         })
     } 
 }
